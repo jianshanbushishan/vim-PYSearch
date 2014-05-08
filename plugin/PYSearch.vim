@@ -19,6 +19,10 @@ if !exists("s:PYDict")
     endfor
 endif
 
+if !exists("g:PYSearchOnlyChinese")
+    let g:PYSearchOnlyChinese = 1
+endif
+
 func! s:CompareChar(key, target)
     if a:target >= '!' && a:target <= '~'
        if a:key != a:target
@@ -86,7 +90,28 @@ func! s:Find(str, keys, ret)
    return 1
 endfunc
 
+func! s:CheckIsValid(item)
+    " 去掉中英文混合的结果
+    let chars = s:Split2Chars(a:item)
+    let bEnginsh = (chars[0][0]<='~')
+    for char in chars[1:]
+        let bEnginsh2 = (chars[0][0]<='~')
+        if bEnginsh != bEnginsh2
+            return 0
+        endif
+
+    if g:PYSearchOnlyChinese == 1 && bEnginsh == 1
+        return 0
+    endif
+
+    return 1
+endfunc
+
 func! s:AddToSet(set, item)
+    if s:CheckIsValid(a:item) == 0
+        return
+    endif
+
     let i = index(a:set, a:item)
     if i == -1
         call add(a:set, a:item)

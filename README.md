@@ -15,3 +15,4 @@ trans.py    用于将pinyin.txt转为PYTable.txt的转换脚本,以方便遇到�
 PYSearch    搜索并高亮和输入的序列匹配的所有汉字或英文字符,可能会有多个匹配的内容,可以使用PYNext依次切换
 PYNext  依次设置当前高亮的内容为和输入的序列匹配的汉字或英文字符
 PYTest  用于脚本自身功能的测试
+g:PYSearchOnlyChinese变量用于设置是否只搜索中文字符,默认为1,设置为0后,可以同时搜索英文和中文拼音首字母缩写匹配的
