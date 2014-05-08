@@ -3,18 +3,11 @@ if exists("s:did_load_py_search")
 endif
 let s:did_load_py_search = 1
 
-let s:CurFile = expand("<sfile>")
-if has( "win32")
-    let s:flag = "\\" 
-else
-    let s:flag = "/" 
-endif
-let s:idx = strridx(s:CurFile, s:flag)
-let s:PYDictFile = strpart(s:CurFile, 0, s:idx+1)."../PinYinSearch.dict"
-call simplify(s:PYDictFile)
+let s:CurPath = expand("<sfile>:p:h")
+let s:PYDictFile = s:CurPath."/../PinYinSearch.dict"
 
 if !filereadable(s:PYDictFile)
-    echomsg "there is no PinYinSearch.dict"
+    echomsg "there is no ".s:PYDictFile
     finish
 endif
 
