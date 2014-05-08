@@ -4,7 +4,7 @@ endif
 let s:did_load_py_search = 1
 
 let s:CurPath = expand("<sfile>:p:h")
-let s:PYDictFile = s:CurPath."/../PinYinSearch.dict"
+let s:PYDictFile = s:CurPath."/../PYTable.txt"
 
 if !filereadable(s:PYDictFile)
     echomsg "there is no ".s:PYDictFile
@@ -125,6 +125,9 @@ func! s:PinYinTest()
     let testStr = "这里用来执行中文拼音搜索测试,这种搜索方案也可用于easymotion中"
     " 这里的testStr因为是直接定义在文件里需要转换编码为utf8编码,
     " PYSearch使用getline直接从buffer获取到的内容已经是vim内置的utf8编码
+    " 注意只能打开这个文件时,执行PYTest的结果才正确,
+    " 因为默认的文件编码都是utf8,而这个文件的编码是gbk
+    " 如果当前buffer不是这个文件,那么&fileencoding的值可能是其它值,会导致转码错误
     let utfStr = iconv(testStr, &fileencoding, "utf-8")
     call s:Find(utfStr, "ss", ret)
     echo ret
